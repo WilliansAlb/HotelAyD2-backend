@@ -1,6 +1,5 @@
 package com.ayd2.hotel.service.jwt;
 
-import com.ayd2.hotel.security.KeyLoader;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -14,12 +13,6 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-
-    @Value("${security.jwt.public.key}")
-    private String PUBLIC_KEY;
-
-    @Value("${security.jwt.private.key}")
-    private String PRIVATE_KEY;
 
     @Value("${security.jwt.secret.key}")
     private String SECRET_KEY;
