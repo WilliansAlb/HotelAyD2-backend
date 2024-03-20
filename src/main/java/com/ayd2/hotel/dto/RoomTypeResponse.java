@@ -1,6 +1,6 @@
-package com.ayd2.hotel.dto.reception;
+package com.ayd2.hotel.dto;
 
-import com.ayd2.hotel.model.reception.RoomType;
+import com.ayd2.hotel.model.RoomType;
 import lombok.Value;
 
 @Value
@@ -10,10 +10,10 @@ public class RoomTypeResponse {
     int number_of_beds;
     Double price;
 
-    public RoomTypeResponse(RoomType roomType){
+    public RoomTypeResponse(RoomType roomType) {
         this.room_type_id = roomType.getRoomTypeId();
         this.room_type_name = roomType.getRoomTypeName();
         this.number_of_beds = roomType.getNumberOfBeds();
-        this.price = roomType.getPrice();
+        this.price = roomType.getPrice().doubleValue();
     }
 }

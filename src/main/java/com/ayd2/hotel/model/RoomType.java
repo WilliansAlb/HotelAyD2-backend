@@ -1,4 +1,4 @@
-package com.ayd2.hotel.model.reception;
+package com.ayd2.hotel.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,11 +7,14 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "htl_room_type")
 @Getter
 @Setter
 public class RoomType {
+
     @Id
     @Column(name = "room_type_id")
     private Long roomTypeId;
@@ -20,8 +23,8 @@ public class RoomType {
     private String roomTypeName;
 
     @Column(name = "number_of_beds")
-    private int numberOfBeds;
+    private Integer numberOfBeds;
 
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
 }

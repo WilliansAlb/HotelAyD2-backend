@@ -1,6 +1,6 @@
-package com.ayd2.hotel.dto.reception;
+package com.ayd2.hotel.dto;
 
-import com.ayd2.hotel.model.reception.Room;
+import com.ayd2.hotel.model.Room;
 import lombok.Value;
 
 @Value
@@ -10,9 +10,9 @@ public class RoomResponse {
     String room_code;
     int htl_level;
 
-    public RoomResponse(Room room){
+    public RoomResponse(Room room) {
         this.room_id = room.getRoomId();
-        this.room_type_id = room.getRoomTypeId();
+        this.room_type_id = room.getRoomType().getRoomTypeId();
         this.room_code = room.getRoomCode();
         this.htl_level = room.getHtlLevel();
     }
