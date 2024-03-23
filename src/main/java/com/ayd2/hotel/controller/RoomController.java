@@ -1,7 +1,6 @@
 package com.ayd2.hotel.controller;
 
 import com.ayd2.hotel.dto.RoomResponse;
-import com.ayd2.hotel.dto.RoomTypeResponse;
 import com.ayd2.hotel.exception.HtlException;
 import com.ayd2.hotel.model.Room;
 import com.ayd2.hotel.service.RoomService;
@@ -33,10 +32,11 @@ public class RoomController {
         return ResponseEntity.ok(roomService.findAll());
     }
 
-    @GetMapping
-    @RequestMapping("types")
-    public ResponseEntity<List<RoomTypeResponse>> findAllTypes() {
-        return ResponseEntity.ok(roomService.findAllTypes());
+    @GetMapping("{roomId}")
+    public ResponseEntity<Room> findById(@PathVariable("roomId") Long roomId) {
+        return roomService.findById(roomId)
+                .map(room -> new ResponseEntity<>(room, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
