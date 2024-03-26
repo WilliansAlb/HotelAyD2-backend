@@ -1,4 +1,4 @@
-package com.ayd2.hotel.security;
+package com.ayd2.hotel.service;
 
 import com.ayd2.hotel.dto.RoomTypeResponse;
 import com.ayd2.hotel.exception.HtlException;

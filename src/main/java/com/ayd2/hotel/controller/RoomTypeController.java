@@ -3,7 +3,7 @@ package com.ayd2.hotel.controller;
 import com.ayd2.hotel.dto.RoomTypeResponse;
 import com.ayd2.hotel.exception.HtlException;
 import com.ayd2.hotel.model.RoomType;
-import com.ayd2.hotel.security.RoomTypeService;
+import com.ayd2.hotel.service.RoomTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

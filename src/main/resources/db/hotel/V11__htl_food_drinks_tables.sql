@@ -7,25 +7,24 @@ CREATE TABLE public.htl_menu (
     CONSTRAINT htl_menu_pk PRIMARY KEY (menu_id)
 );
 
-CREATE TABLE public.htl_menu_item (
-    menu_item_id BIGINT NOT NULL,
-    cat_menu_item_type BIGINT NOT NULL,
-    menu_id BIGINT,
-    item_name VARCHAR(100) NOT NULL,
-    item_description VARCHAR(500),
-    item_price NUMERIC(20, 6) NOT NULL,
-    item_ingredients VARCHAR(500) NULL,
+CREATE TABLE public.htl_food (
+    food_id BIGINT NOT NULL,
+    cat_food_type BIGINT NOT NULL,
+    food_name VARCHAR(100) NOT NULL,
+    food_description VARCHAR(500),
+    food_price NUMERIC(20, 6) NOT NULL,
+    food_ingredients VARCHAR(500) NULL,
     attachment_url VARCHAR(500),
-    CONSTRAINT htl_menu_item_pk PRIMARY KEY (menu_item_id)
+    CONSTRAINT htl_food_pk PRIMARY KEY (food_id)
 );
 
-ALTER TABLE public.htl_menu_item
-ADD CONSTRAINT htl_menu_htl_menu_item_fk
-FOREIGN KEY (menu_id)
-REFERENCES htl_menu (menu_id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
+CREATE TABLE public.htl_menu_food (
+    menu_food_id BIGINT NOT NULL,
+    menu_id BIGINT NOT NULL,
+    food_id BIGINT NOT NULL,
+    CONSTRAINT htl_menu_food_pk PRIMARY KEY (menu_food_id)
+);
 
 CREATE SEQUENCE SEQ_HTL_MENU INCREMENT BY 1 START WITH 15000;
-CREATE SEQUENCE SEQ_HTL_MENU_ITEM INCREMENT BY 1 START WITH 15000;
+CREATE SEQUENCE SEQ_HTL_FOOD INCREMENT BY 1 START WITH 15000;
+CREATE SEQUENCE SEQ_HTL_MENU_FOOD INCREMENT BY 1 START WITH 15000;
