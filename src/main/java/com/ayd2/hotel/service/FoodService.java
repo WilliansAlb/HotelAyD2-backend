@@ -33,7 +33,7 @@ public class FoodService {
         if (foodOpt.isEmpty()) throw new HtlException("food_not_found")
                 .status(HttpStatus.NOT_FOUND);
 
-        if (foodId.equals(foodOpt.get().getFoodId())) throw new HtlException("invalid_update");
+        if (!foodId.equals(foodOpt.get().getFoodId())) throw new HtlException("invalid_update");
 
         return foodRepository.save(entity);
     }
