@@ -29,7 +29,7 @@ public class Food {
 
     @JoinColumn(name = "cat_food_type")
     @ManyToOne(fetch = FetchType.LAZY)
-    private AdmCategory catMenuItemType;
+    private AdmCategory catFoodType;
 
     @Column(name = "food_name")
     private String foodName;
