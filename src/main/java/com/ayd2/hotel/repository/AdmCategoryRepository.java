@@ -16,7 +16,6 @@ public interface AdmCategoryRepository extends JpaRepository<AdmCategory, Long> 
         var parent = this.findByInternalId(parentInternalId);
         if (parent == null) return new ArrayList<>();
 
-        System.out.println(parent.getCategoryId());
         return this.findByParentCategoryId(parent.getCategoryId());
     }
 }
