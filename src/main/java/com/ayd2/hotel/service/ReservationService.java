@@ -2,17 +2,19 @@ package com.ayd2.hotel.service;
 
 import com.ayd2.hotel.dto.NewReservationRequest;
 import com.ayd2.hotel.dto.ReservationResponse;
+import com.ayd2.hotel.exception.HtlException;
 import com.ayd2.hotel.model.ClientAccount;
 import com.ayd2.hotel.model.PaymentReservation;
 import com.ayd2.hotel.model.Reservation;
-import com.ayd2.hotel.repository.ClientAccountRepository;
-import com.ayd2.hotel.repository.PaymentRepository;
-import com.ayd2.hotel.repository.PaymentReservationRepository;
-import com.ayd2.hotel.repository.ReservationRepository;
+import com.ayd2.hotel.model.StatusReservation;
+import com.ayd2.hotel.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,15 +23,19 @@ public class ReservationService {
     private ClientAccountRepository clientAccountRepository;
     private PaymentRepository paymentRepository;
     private PaymentReservationRepository paymentReservationRepository;
+    private StatusReservationRepository statusReservationRepository;
+
 
 
     @Autowired
     public ReservationService(ReservationRepository reservationRepository, ClientAccountRepository clientAccountRepository,
-                              PaymentRepository paymentRepository, PaymentReservationRepository paymentReservationRepository) {
+                              PaymentRepository paymentRepository, PaymentReservationRepository paymentReservationRepository,
+                              StatusReservationRepository statusReservationRepository) {
         this.reservationRepository = reservationRepository;
         this.clientAccountRepository = clientAccountRepository;
         this.paymentRepository = paymentRepository;
         this.paymentReservationRepository = paymentReservationRepository;
+        this.statusReservationRepository = statusReservationRepository;
     }
 
     public List<ReservationResponse> getReservations() {
@@ -68,4 +74,27 @@ public class ReservationService {
         paymentReservationRepository.save(paymentReservation);
         return new ReservationResponse((newReservation));
     }
+
+    public Reservation cancelReservation(Long reservation_id) throws HtlException{
+        Optional<Reservation> toCancel = reservationRepository.findByReservationIdAndStatusGreaterThanAndStatusLessThan(reservation_id,0,3);
+        if (toCancel.isEmpty()){
+            throw new HtlException("Not found reservation").status(HttpStatus.NOT_FOUND);
+        }
+        toCancel.get().setStatus(0);
+        reservationRepository.save(toCancel.get());
+        ClientAccount account = clientAccountRepository.findByClientIdAndActive(toCancel.get().getClientId(),true);
+        if (account == null){
+            throw new HtlException("Not found client account").status(HttpStatus.NOT_FOUND);
+        }
+        account.setActive(false);
+        LocalDate currentDate = LocalDate.now();
+        account.setEndDate(currentDate);
+        clientAccountRepository.save(account);
+        return toCancel.get();
+    }
+
+    public List<StatusReservation> getAllReservationStatus(){
+        return statusReservationRepository.findAll();
+    }
+
 }

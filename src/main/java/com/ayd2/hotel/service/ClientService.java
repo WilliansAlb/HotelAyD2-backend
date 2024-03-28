@@ -32,7 +32,7 @@ public class ClientService {
 
     public ClientResponse saveClient(ClientRequest clientRequest) throws HtlException {
         List<Client> found = this.clientRepository.findByIdentificationNo(clientRequest.getIdentification_no());
-        if (found.isEmpty()) {
+        if (!found.isEmpty()) {
             throw new HtlException("Duplicated client").status(HttpStatus.CONFLICT);
         }
 

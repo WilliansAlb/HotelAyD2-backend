@@ -2,6 +2,8 @@ package com.ayd2.hotel.controller;
 
 import com.ayd2.hotel.dto.NewReservationRequest;
 import com.ayd2.hotel.dto.ReservationResponse;
+import com.ayd2.hotel.exception.HtlException;
+import com.ayd2.hotel.model.StatusReservation;
 import com.ayd2.hotel.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,15 @@ public class ReservationController {
     @GetMapping
     public ResponseEntity<List<ReservationResponse>> getReservations() {
         return ResponseEntity.ok(reservationService.getReservations());
+    }
+
+    @PutMapping("/cancel/{reservation_id}")
+    public ResponseEntity<ReservationResponse> cancelReservation(@PathVariable("reservation_id") Long reservationToCancel) throws HtlException {
+        return ResponseEntity.ok(new ReservationResponse(reservationService.cancelReservation(reservationToCancel)));
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<StatusReservation>> getAllReservationStatus() {
+        return ResponseEntity.ok(reservationService.getAllReservationStatus());
     }
 }
